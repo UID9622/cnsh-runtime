@@ -37,13 +37,19 @@ pip install -e ".[reactor]"
 pip install -e ".[asr]"
 ```
 
-### 4. 完整依赖
+### 4. 带语音合成（TTS）支持
+
+```bash
+pip install -e ".[tts]"
+```
+
+### 5. 完整依赖
 
 ```bash
 pip install -e ".[full]"
 ```
 
-> ⚠️ The `full` extra pulls heavy dependencies such as `torch` and `openai-whisper`. Use only when you need the ASR/OCR engines.
+> ⚠️ The `full` extra pulls heavy dependencies such as `torch` and `openai-whisper`. Use only when you need the ASR/OCR/TTS engines.
 
 ---
 
@@ -62,6 +68,21 @@ python -m cnsh_runtime.cli
 ```
 
 You will enter the interactive 龍魂 console.
+
+## 语音命令行 | Voice CLI
+
+`cnsh-voice` provides command-line access to TTS and ASR:
+
+```bash
+# 文字转语音
+cnsh-voice tts "你好，龍魂" -o hello.mp3 -v xiaoxiao
+
+# 语音转文字（需要安装 .[asr]）
+cnsh-voice asr recording.wav -l zh
+
+# 列出可用语音角色
+cnsh-voice roles
+```
 
 ---
 
@@ -89,6 +110,22 @@ Or import through the package namespace:
 from cnsh_runtime.cnsh.runtime.启动器 import 系统启动器
 ```
 
+### 语音能力 | Voice Capabilities
+
+```python
+from cnsh_runtime.cnsh.voice import 龍魂语音合成器, 龍魂语音识别器
+
+# TTS
+合成器 = 龍魂语音合成器(语音角色="xiaoxiao")
+结果 = 合成器.文字转语音同步("你好，龍魂")
+print(结果.音频路径)
+
+# ASR (requires .[asr] extras)
+识别器 = 龍魂语音识别器(模型名称="base")
+结果 = 识别器.语音转文字("recording.wav")
+print(结果.文本)
+```
+
 ---
 
 ## 目录结构 | Package Structure
@@ -113,6 +150,7 @@ cnsh-runtime/
             ├── audit/
             ├── snapshots/
             ├── reactor/
+            ├── voice/
             ├── memory/
             ├── sandbox/
             ├── protocols/
@@ -151,6 +189,7 @@ Edit these placeholders in `pyproject.toml` and the source files before publishi
 | Core package load | `numpy` |
 | 龍瞳 OCR / image engine | `opencv-python`, `Pillow`, `pytesseract`, `scipy` |
 | 龍音 ASR / voice engine | `openai-whisper`, `torch`, `soundfile`, `pyaudio`, `SpeechRecognition` |
+| 龍吟 TTS / voice synthesis | `edge-tts`, `pyttsx3` |
 | Notion integration | `requests` (currently commented out in source) |
 
 Optional dependencies are loaded lazily where possible; missing packages usually trigger a yellow 🟡 warning instead of a hard failure.

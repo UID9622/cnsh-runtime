@@ -58,6 +58,12 @@ asr = [
     "SpeechRecognition>=3.10.0",
 ]
 
+# TTS / voice-synthesis engine support
+tts = [
+    "edge-tts>=6.1.0",
+    "pyttsx3>=2.90",
+]
+
 # Install everything
 full = [
     "opencv-python>=4.7.0",
@@ -69,10 +75,13 @@ full = [
     "soundfile>=0.12.1",
     "pyaudio>=0.2.13",
     "SpeechRecognition>=3.10.0",
+    "edge-tts>=6.1.0",
+    "pyttsx3>=2.90",
 ]
 
 [project.scripts]
 cnsh-launch = "cnsh_runtime.cli:main"
+cnsh-voice = "cnsh_runtime.cli_voice:main"
 
 [project.urls]
 Homepage = "https://github.com/UID9622/cnsh-runtime"
