@@ -1,0 +1,96 @@
+#龍芯⚡️2026-06-18-CNSH-PYPROJECT-v1.0
+[build-system]
+requires = ["setuptools>=61.0", "wheel"]
+build-backend = "setuptools.build_meta"
+
+[project]
+name = "cnsh-runtime"
+version = "2026.6.18"
+description = "龍魂 CNSH (Chinese Native System) runtime — a Chinese-native digital ecosystem packaged for Python."
+readme = "README.md"
+license = { text = "CC-BY-NC-SA-4.0" }
+requires-python = ">=3.9"
+authors = [
+    { name = "LongHun Community" },
+]
+keywords = [
+    "cnsh", "longhun", "龍魂", "chinese-native", "AI", "runtime",
+    "digital-ecosystem", "DNA-trace", "wuxing", "iching",
+]
+classifiers = [
+    "Development Status :: 4 - Beta",
+    "Intended Audience :: Developers",
+    "License :: OSI Approved :: Creative Commons Attribution-NonCommercial-ShareAlike 4.0 International",
+    "Natural Language :: Chinese (Simplified)",
+    "Natural Language :: Chinese (Traditional)",
+    "Natural Language :: English",
+    "Operating System :: OS Independent",
+    "Programming Language :: Python :: 3",
+    "Programming Language :: Python :: 3.9",
+    "Programming Language :: Python :: 3.10",
+    "Programming Language :: Python :: 3.11",
+    "Programming Language :: Python :: 3.12",
+    "Programming Language :: Python :: 3.13",
+    "Topic :: Scientific/Engineering :: Artificial Intelligence",
+    "Topic :: Software Development :: Libraries :: Python Modules",
+]
+
+dependencies = [
+    # Core requirement: 图像识别引擎 imports numpy at module load time.
+    "numpy>=1.23.0",
+]
+
+[project.optional-dependencies]
+# OCR / computer-vision engine support
+reactor = [
+    "opencv-python>=4.7.0",
+    "Pillow>=9.5.0",
+    "pytesseract>=0.3.10",
+    "scipy>=1.10.0",
+]
+
+# ASR / voice-recognition engine support
+asr = [
+    "openai-whisper>=20230314",
+    "torch>=2.0.0",
+    "soundfile>=0.12.1",
+    "pyaudio>=0.2.13",
+    "SpeechRecognition>=3.10.0",
+]
+
+# Install everything
+full = [
+    "opencv-python>=4.7.0",
+    "Pillow>=9.5.0",
+    "pytesseract>=0.3.10",
+    "scipy>=1.10.0",
+    "openai-whisper>=20230314",
+    "torch>=2.0.0",
+    "soundfile>=0.12.1",
+    "pyaudio>=0.2.13",
+    "SpeechRecognition>=3.10.0",
+]
+
+[project.scripts]
+cnsh-launch = "cnsh_runtime.cli:main"
+
+[project.urls]
+Homepage = "https://github.com/UID9622/cnsh-runtime"
+Repository = "https://github.com/UID9622/cnsh-runtime"
+Issues = "https://github.com/UID9622/cnsh-runtime/issues"
+
+[tool.setuptools.packages.find]
+where = ["src"]
+
+[tool.setuptools.package-data]
+"cnsh_runtime.cnsh" = [
+    "ROOT_CARD.md",
+    "中央藏经阁目录.md",
+    "中央藏经阁索引.json",
+    "reactor/測試圖像/*.png",
+    "reactor/測試圖像/*.json",
+    "*/__init__.py",
+]
+
+[tool.setuptools.exclude-package-data]
+"*" = ["__pycache__", "*.pyc"]
