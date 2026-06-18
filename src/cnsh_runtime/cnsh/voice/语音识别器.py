@@ -530,11 +530,10 @@ class 龍魂语音识别器:
                 return 音频数据.astype(np.float32), 采样率
 
         try:
-            with tempfile.NamedTemporaryFile(suffix='.wav', delete=False) as 临时文件:
-                临时路径 = 临时文件.name
+            临时路径 = tempfile.mktemp(suffix='.wav')
 
             subprocess.run(
-                ['ffmpeg', '-i', 音频路径, '-ar', '16000', '-ac', '1', '-f', 'wav', 临时路径],
+                ['ffmpeg', '-y', '-i', 音频路径, '-ar', '16000', '-ac', '1', '-f', 'wav', 临时路径],
                 check=True, capture_output=True, timeout=30,
             )
             结果 = self._加载音频(临时路径)
